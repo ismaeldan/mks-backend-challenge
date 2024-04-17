@@ -1,7 +1,7 @@
 const knex = require('../database/connection')
 const bcrypt = require('bcrypt')
 
-const cadastrar = async (req, res) => {
+const cadastrarUsuario = async (req, res) => {
   const { nome, email, senha } = req.body
 
   if (!nome || !email || !senha) {
@@ -31,9 +31,8 @@ const cadastrar = async (req, res) => {
 
     return res.status(201).json(novoUsuario)
   } catch (error) {
-    console.log(error)
     return res.status(500).json({ message: 'Erro interno do servidor' })
   }
 }
 
-module.exports = cadastrar
+module.exports = cadastrarUsuario

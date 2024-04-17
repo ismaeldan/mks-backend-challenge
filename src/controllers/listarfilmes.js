@@ -6,7 +6,7 @@ const listarFilmes = async (req, res) => {
 
     return res.status(200).json(lista)
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno do servidor' })
+    return res.status(500).json({ message: 'Erro interno do servidor.' })
   }
 }
 

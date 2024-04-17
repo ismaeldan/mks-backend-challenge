@@ -9,20 +9,20 @@ const login = async (req, res) => {
   if (!email || !senha) {
     return res
       .status(400)
-      .json({ mensagem: 'É obrigatório fornecer email e senha' })
+      .json({ mensagem: 'É obrigatório fornecer email e senha.' })
   }
 
   try {
     const usuario = await knex('usuario').where({ email }).first()
 
     if (!usuario) {
-      return res.status(401).json({ messagem: 'Email invalida' })
+      return res.status(401).json({ messagem: 'Email invalida.' })
     }
 
     const validaSenhaBcrypt = await bcrypt.compare(senha, usuario.senha)
 
     if (!validaSenhaBcrypt) {
-      return res.status(401).json({ mensagem: 'Senha invalida' })
+      return res.status(401).json({ mensagem: 'Senha invalida.' })
     }
 
     const token = jwt.sign({ id: usuario.id }, keyPrivada, { expiresIn: '1h' })
@@ -35,7 +35,7 @@ const login = async (req, res) => {
 
     return res.status(200).json({ dadosUsuario, token })
   } catch (error) {
-    return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    return res.status(500).json({ mensagem: 'Erro interno do servidor.' })
   }
 }
 
