@@ -1,6 +1,7 @@
 const knex = require('../database/connection')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const transportador = require('../middleware/email')
 const keyPrivada = process.env.KEY_DEVWEBTOKEN
 
 const login = async (req, res) => {
@@ -26,6 +27,15 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: usuario.id }, keyPrivada, { expiresIn: '1h' })
+
+    transportador.sendMail({
+      from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+      to: `${usuario.nome} <${usuario.email}>`,
+      subject: 'Tentativa de Login',
+      text: `
+        <h1>Você fez Login no MKS-Challenge</h1>
+        `
+    })
 
     const dadosUsuario = {
       id: usuario.id,
